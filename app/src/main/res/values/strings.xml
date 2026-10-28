@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">حارس البيانات PRO</string>
+    <string name="app_slogan">راقب استهلاكك، تحكّم في اتصالك، واحمِ باقتك</string>
+    
+    <!-- Navigation Tabs -->
+    <string name="nav_dashboard">الرئيسية</string>
+    <string name="nav_history">السجل والتقويم</string>
+    <string name="nav_apps">التطبيقات</string>
+    <string name="nav_firewall">جدار الحماية</string>
+    <string name="nav_settings">الإعدادات</string>
+
+    <!-- General -->
+    <string name="permission_required_title">صلاحية الوصول لبيانات الاستخدام</string>
+    <string name="permission_required_desc">يحتاج التطبيق إلى صلاحية الوصول لمعلومات الاستخدام (Usage Access) ليتمكن من قراءة استهلاك الإنترنت الفعلي من نظام أندرويد بدقة.</string>
+    <string name="grant_permission">منح الصلاحية الآن</string>
+    <string name="vpn_permission_desc">يتطلب جدار الحماية المحلي إذن اتصال VPN لتصفية حركة بيانات التطبيقات المحددة على جهازك مباشرة وبدون أي خوادم خارجية.</string>
+    
+    <!-- Firewall notification -->
+    <string name="firewall_service_title">جدار حماية حارس البيانات نشط</string>
+    <string name="firewall_service_desc">يحمي اتصالك ويراقب التطبيقات المحظورة محلياً</string>
+</resources>

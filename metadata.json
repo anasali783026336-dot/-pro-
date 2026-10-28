@@ -1,0 +1,6 @@
+{
+  "name": "حارس البيانات PRO",
+  "description": "تطبيق متكامل لمراقبة استهلاك الإنترنت وتاريخ استخدام البيانات وجدار حماية محلي لحماية باقتك.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
