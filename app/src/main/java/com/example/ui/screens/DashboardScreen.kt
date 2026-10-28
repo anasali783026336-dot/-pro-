@@ -122,11 +122,11 @@ fun DashboardScreen(
             }
         }
 
-        // Live Speed and Connection Status
+        // Live Speed and Connection Status with Real-time Graph
         item {
-            SpeedAndStatusCard(
-                activeNetwork = state.activeNetwork,
-                speedInfo = state.speedInfo
+            com.example.ui.components.SpeedLiveGraphCard(
+                telemetry = state.speedTelemetry,
+                activeNetwork = state.activeNetwork
             )
         }
 

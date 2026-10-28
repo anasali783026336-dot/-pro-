@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import com.example.service.SpeedTelemetry
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
@@ -28,7 +29,7 @@ data class DashboardUiState(
     val top5Apps: List<AppUsageInfo> = emptyList(),
     val last7DaysDailyItems: List<DayUsageItem> = emptyList(),
     val activeNetwork: NetworkType = NetworkType.NONE,
-    val speedInfo: SpeedInfo = SpeedInfo(),
+    val speedTelemetry: SpeedTelemetry = SpeedTelemetry(),
     val quotaConfig: QuotaConfig = QuotaConfig(),
     val isFirewallRunning: Boolean = false,
     val blockedAppsCount: Int = 0,
@@ -50,10 +51,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     init {
         speedTracker.start(viewModelScope)
 
-        // Observe speed
+        // Observe speed telemetry
         viewModelScope.launch {
-            speedTracker.speedFlow.collectLatest { speed ->
-                _uiState.value = _uiState.value.copy(speedInfo = speed)
+            speedTracker.telemetryFlow.collectLatest { tel ->
+                _uiState.value = _uiState.value.copy(speedTelemetry = tel)
             }
         }
 

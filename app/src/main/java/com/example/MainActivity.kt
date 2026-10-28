@@ -18,11 +18,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Dashboard
+import androidx.compose.material.icons.filled.Insights
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Apps
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Dashboard
+import androidx.compose.material.icons.outlined.Insights
 import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Icon
@@ -50,13 +52,14 @@ import com.example.ui.screens.DashboardScreen
 import com.example.ui.screens.FirewallScreen
 import com.example.ui.screens.HistoryScreen
 import com.example.ui.screens.SettingsScreen
+import com.example.ui.screens.SmartAnalyticsScreen
 import com.example.ui.theme.CyberBackground
 import com.example.ui.theme.CyberCyan
-import com.example.ui.theme.CyberEmerald
 import com.example.ui.theme.CyberSurface
 import com.example.ui.theme.DataGuardianTheme
 import com.example.ui.theme.TextMuted
 import com.example.ui.theme.TextPrimary
+import com.example.ui.viewmodel.AnalyticsViewModel
 import com.example.ui.viewmodel.AppsViewModel
 import com.example.ui.viewmodel.FirewallViewModel
 import com.example.ui.viewmodel.HistoryViewModel
@@ -90,6 +93,7 @@ fun MainAppContent() {
 
     val mainViewModel: MainViewModel = viewModel()
     val historyViewModel: HistoryViewModel = viewModel()
+    val analyticsViewModel: AnalyticsViewModel = viewModel()
     val appsViewModel: AppsViewModel = viewModel()
     val firewallViewModel: FirewallViewModel = viewModel()
 
@@ -126,6 +130,7 @@ fun MainAppContent() {
     val navItems = listOf(
         NavItem("الرئيسية", Icons.Filled.Dashboard, Icons.Outlined.Dashboard),
         NavItem("السجل", Icons.Filled.CalendarMonth, Icons.Outlined.CalendarMonth),
+        NavItem("التحليل", Icons.Filled.Insights, Icons.Outlined.Insights),
         NavItem("التطبيقات", Icons.Filled.Apps, Icons.Outlined.Apps),
         NavItem("جدار الحماية", Icons.Filled.Security, Icons.Outlined.Security),
         NavItem("الإعدادات", Icons.Filled.Settings, Icons.Outlined.Settings)
@@ -145,8 +150,9 @@ fun MainAppContent() {
                         onClick = {
                             selectedTabIndex = index
                             if (index == 0) mainViewModel.refreshData()
-                            if (index == 2) appsViewModel.loadApps()
-                            if (index == 3) firewallViewModel.loadAppList()
+                            if (index == 2) analyticsViewModel.refreshAnalytics()
+                            if (index == 3) appsViewModel.loadApps()
+                            if (index == 4) firewallViewModel.loadAppList()
                         },
                         icon = {
                             Icon(
@@ -155,7 +161,7 @@ fun MainAppContent() {
                             )
                         },
                         label = {
-                            Text(text = item.titleAr, fontSize = 11.sp)
+                            Text(text = item.titleAr, fontSize = 10.sp)
                         },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = CyberCyan,
@@ -179,20 +185,23 @@ fun MainAppContent() {
                 when (tab) {
                     0 -> DashboardScreen(
                         viewModel = mainViewModel,
-                        onNavigateToApps = { selectedTabIndex = 2 },
-                        onNavigateToFirewall = { selectedTabIndex = 3 },
+                        onNavigateToApps = { selectedTabIndex = 3 },
+                        onNavigateToFirewall = { selectedTabIndex = 4 },
                         onToggleFirewall = handleToggleFirewall
                     )
                     1 -> HistoryScreen(
                         viewModel = historyViewModel
                     )
-                    2 -> AppsMonitorScreen(
+                    2 -> SmartAnalyticsScreen(
+                        viewModel = analyticsViewModel
+                    )
+                    3 -> AppsMonitorScreen(
                         viewModel = appsViewModel
                     )
-                    3 -> FirewallScreen(
+                    4 -> FirewallScreen(
                         viewModel = firewallViewModel
                     )
-                    4 -> SettingsScreen(
+                    5 -> SettingsScreen(
                         viewModel = mainViewModel,
                         onSaveQuota = { bytes, day, warning ->
                             app.quotaRepository.updateConfig(bytes, day, warning)

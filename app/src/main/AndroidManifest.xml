@@ -56,6 +56,17 @@
                 android:value="Local network packet filter and firewall for user data quota protection" />
         </service>
 
+        <!-- FileProvider for CSV reports export -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>
