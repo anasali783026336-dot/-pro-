@@ -25,12 +25,37 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.3.1'
 
       - name: Grant Execute Permission to Gradlew
         run: |
           if [ -f "./gradlew" ]; then
             chmod +x gradlew
           fi
+
+      - name: Ensure Keystore and Secrets Config
+        run: |
+          # 1. Ensure .env file exists so secrets-gradle-plugin is satisfied
+          if [ ! -f ".env" ]; then
+            if [ -f ".env.example" ]; then
+              cp .env.example .env
+            else
+              touch .env
+            fi
+          fi
+
+          # 2. Ensure debug.keystore exists for signingConfig 'debugConfig'
+          if [ ! -f "debug.keystore" ]; then
+            if [ -f "debug.keystore.base64" ]; then
+              echo "Decoding debug.keystore from debug.keystore.base64..."
+              base64 -d debug.keystore.base64 > debug.keystore
+            else
+              echo "Generating standard debug.keystore with keytool..."
+              keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+            fi
+          fi
+          ls -lh debug.keystore
 
       - name: Run Unit & Robolectric Tests
         run: |
