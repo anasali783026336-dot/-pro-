@@ -82,7 +82,10 @@ jobs:
           fi
           echo "تم العثور على APK في المسار: $APK_PATH"
           echo "حجم الملف: $(ls -lh $APK_PATH | awk '{print $5}')"
-          echo "APK_OUTPUT_PATH=$APK_PATH" >> $GITHUB_ENV
+          # Create clean direct APK copy
+          cp "$APK_PATH" "DataGuardianPRO-v1.0-debug.apk"
+          sha256sum "DataGuardianPRO-v1.0-debug.apk"
+          echo "APK_OUTPUT_PATH=DataGuardianPRO-v1.0-debug.apk" >> $GITHUB_ENV
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
